@@ -1,0 +1,19 @@
+version: "3.1"
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: dbmovie
+      POSTGRES_USER: movie
+      POSTGRES_PASSWORD: password
+    ports: 
+      - 5432:5432
+  fastapi:
+    image: imagefastapi
+    environment:
+      DATABASE_URL: "postgresql://movie:password@database:5432/dbmovie"
+    ports:
+      - 8888:8888
+    depends_on:
+      - database
